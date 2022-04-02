@@ -1,5 +1,5 @@
 services:
-  identity-service:
+  order-service:
     image: 'order-service'
     build:
       context: .
@@ -54,7 +54,6 @@ services:
   # *----------------------------------------*
   # WEB INTERFACE FOR KAFKA
   # *----------------------------------------*
-
   kafdrop:
     image: obsidiandynamics/kafdrop
     container_name: kafdrop
