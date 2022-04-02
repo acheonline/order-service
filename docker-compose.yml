@@ -1,0 +1,73 @@
+services:
+  identity-service:
+    image: 'order-service'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 1
+    ports:
+      - "8088:8080"
+    networks:
+      - private-network
+    links:
+      - broker
+    depends_on:
+      - broker
+    environment:
+      JAVA_OPTS: "-Xss256k"
+      KAFKA_BOOTSTRAP_SERVERS: broker:19092
+  # *----------------------------------------*
+  # PROVIDING KAFKA
+  # *----------------------------------------*
+  zookeeper:
+    container_name: zookeeper
+    image: confluentinc/cp-zookeeper:5.5.1
+    networks:
+      - private-network
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+  broker:
+    container_name: broker
+    image: confluentinc/cp-server:5.5.1
+    hostname: broker
+    networks:
+      - private-network
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "19092:19092"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://broker:19092,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      CONFLUENT_METRICS_ENABLE: 'false'
+      KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
+  # *----------------------------------------*
+  # WEB INTERFACE FOR KAFKA
+  # *----------------------------------------*
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    container_name: kafdrop
+    networks:
+      - private-network
+    restart: "no"
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: "broker:19092"
+      JVM_OPTS: "-Xms32M -Xmx128M -Xss256K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+    depends_on:
+      - broker
+networks:
+  private-network:
+    driver: bridge
