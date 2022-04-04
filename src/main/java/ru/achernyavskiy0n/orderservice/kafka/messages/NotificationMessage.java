@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Getter
 @RequiredArgsConstructor
+@ToString
 public class NotificationMessage {
     private String username;
     private String payload;

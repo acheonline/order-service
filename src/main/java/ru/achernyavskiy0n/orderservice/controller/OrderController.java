@@ -25,6 +25,6 @@ public class OrderController {
             @RequestBody OrderCreationDto orderCreationDto) throws OrderServiceException {
         service.create(orderCreationDto.getUsername(), orderCreationDto.getAmount());
         return ResponseEntity.ok(
-                new SuccessfulResponse(HttpStatus.OK.value(), "Order created successful"));
+                new SuccessfulResponse(true,HttpStatus.OK.value(), "Order created successful"));
     }
 }

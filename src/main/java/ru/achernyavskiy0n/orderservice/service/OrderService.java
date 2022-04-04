@@ -44,11 +44,11 @@ public class OrderService {
         } else {
             var accountId = responseFromBillingGetAccount.getBody().getAccountId();
             var patchUrl = URI.create(billingHost.concat("/").concat(get).concat("/").concat(accountId));
-            log.info("PATCH зазпрос отправлен на сервис Billing: {}", patchUrl);
-            var billingResponse = restTemplate.patchForObject(patchUrl, amount, SuccessfulResponse.class);
+            log.info("POST зазпрос отправлен на сервис Billing: {}", patchUrl);
+            var billingResponse = restTemplate.postForObject(patchUrl, amount, SuccessfulResponse.class);
             if ((billingResponse != null) && (!billingResponse.isSuccess())) {
                 payload = "Ошибка при создании заказа для пользователя '" + username + "' на сумму: '" + amount + "'. ";
-                throw new OrderServiceException("Не достаточно денег на счете '" + accountId + "' у пользователя '" + username + ".");
+                throw new OrderServiceException("Не достаточно денег на счете '" + accountId + "' у пользователя '" + username + "'.");
             } else {
                 payload = "Успешно создан заказ для пользователя '" + username + "' на сумму: '" + amount + "'. ";
                 log.info(payload);

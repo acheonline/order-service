@@ -37,7 +37,7 @@ logging:
 order-service:
   transport:
     billing:
-      host: ${BILLING_HOST:}
+      host: ${BILLING_HOST:http://localhost:8090}
       get-account-id: ${BILLING_GET_ACCOUNT_ID:api/v1/billing/account}
       patch-account: ${BILLING_PATCH_ACCOUNT_ID:api/v1/billing/account}
     topics:

@@ -37,7 +37,6 @@ public class KafkaProducerConfig {
                 org.springframework.kafka.support.serializer.JsonSerializer.class);
         props.put(
                 org.springframework.kafka.support.serializer.JsonSerializer.ADD_TYPE_INFO_HEADERS, false);
-        props.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, 1024);
         return new DefaultKafkaProducerFactory<>(props);
     }
 
