@@ -4,6 +4,6 @@ import ru.achernyavskiy0n.orderservice.kafka.messages.NotificationMessage;
 
 /**
  */
-public interface TransportProducer {
+public interface TransportNotificationProducer {
     void sendNotification(NotificationMessage message);
 }

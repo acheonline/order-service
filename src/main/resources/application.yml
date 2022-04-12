@@ -25,6 +25,12 @@ management:
 
 spring:
   kafka:
+    consumer:
+      client-id: ${KAFKA_CLIENT_ID:billing-service}
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+      group-id: billing-service-group
+      auto-offset-reset: earliest
+      security.protocol: ${KAFKA_PROTOCOL:PLAINTEXT}
     producer:
       client-id: ${KAFKA_CLIENT_ID:order-service}
       bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
@@ -37,9 +43,8 @@ logging:
 order-service:
   transport:
     billing:
-      host: ${BILLING_HOST:http://localhost:8090}
-      get-account-id: ${BILLING_GET_ACCOUNT_ID:api/v1/billing/account}
-      patch-account: ${BILLING_PATCH_ACCOUNT_ID:api/v1/billing/account}
+      request: ${BILLING_REQUEST_TOPIC:request}
+      response: ${BILLING_RESPONSE_TOPIC:response}
     topics:
       notification:
         notify: ${NOTIFICATION_TOPIC:notify}

@@ -1,14 +1,14 @@
 package ru.achernyavskiy0n.orderservice.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+/**
+ */
 @Getter
 @Setter
 @NoArgsConstructor
-public class OrderCreationDto {
-
+@AllArgsConstructor
+public class Order {
     private String username;
     private Double amount;
 }

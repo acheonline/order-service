@@ -10,7 +10,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
-import ru.achernyavskiy0n.orderservice.kafka.TransportProducer;
+import ru.achernyavskiy0n.orderservice.kafka.TransportNotificationProducer;
 import ru.achernyavskiy0n.orderservice.kafka.messages.NotificationMessage;
 
 import java.util.UUID;
@@ -20,7 +20,7 @@ import java.util.UUID;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class KafkaTransportProducer implements TransportProducer {
+public class KafkaTransportNotificationProducer implements TransportNotificationProducer {
 
   private final KafkaTemplate<String, NotificationMessage> kafkaTemplate;
 
@@ -41,7 +41,7 @@ public class KafkaTransportProducer implements TransportProducer {
       @Override
       public void onSuccess(SendResult<String, ?> result) {
         log.info(
-            "Сообщение для пользователя: '{}' успешно отправлено в сервис Notification // топик: '{}'",
+            "Сообщение для пользователя: '{}' успешно отправлено в сервис Notification топик: '{}'",
             username,
             result.getProducerRecord().topic());
       }

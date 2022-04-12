@@ -1,4 +1,4 @@
-package ru.achernyavskiy0n.orderservice.response;
+package ru.achernyavskiy0n.orderservice.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
