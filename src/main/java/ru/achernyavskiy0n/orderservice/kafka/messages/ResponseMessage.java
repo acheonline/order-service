@@ -21,7 +21,8 @@ public class ResponseMessage {
     public enum ApiResponseStatus {
 
         OK(200, "OK"),
-        INTERNAL_SERVER_ERROR(500, "OK");
+        INTERNAL_SERVER_ERROR(500, "OK"),
+        CONFLICT(409, "Заказ уже создан");
 
         private final int value;
         private final String reasonPhrase;

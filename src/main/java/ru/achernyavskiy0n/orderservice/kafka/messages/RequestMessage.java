@@ -1,9 +1,6 @@
 package ru.achernyavskiy0n.orderservice.kafka.messages;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import ru.achernyavskiy0n.orderservice.domain.Order;
 
@@ -13,6 +10,7 @@ import ru.achernyavskiy0n.orderservice.domain.Order;
 @Accessors
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(callSuper = true)
 public class RequestMessage {
     private Order order;
 }

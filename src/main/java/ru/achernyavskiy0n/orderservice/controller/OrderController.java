@@ -2,7 +2,6 @@ package ru.achernyavskiy0n.orderservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,7 @@ public class OrderController {
     private final TransportNotificationProducer notificationProducer;
 
     @PostMapping(path = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public ApiResponse createOrder(
             @RequestBody Order order) {
         var resp = service.create(order);
